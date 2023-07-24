@@ -17,20 +17,21 @@
  */
 typedef struct cmd_t
 {
-        int mode;
-        int ready;
-        int status;
-        int count;
-        char *input;
-        char *pid;
-        char **args;
-        char **argv;
-        char **envar;
+	int mode;
+	int ready;
+	int status;
+	int count;
+	char *input;
+	char *pid;
+	char **args;
+	char **argv;
+	char **envar;
 } cmd_t;
 
 /**
- * struct var_1 - represent the variable list
+ * struct var_l - represent the variable list
  * @var_len: it shows the length of the variable
+ * @val_len: it shows the length of the value
  * @val: it shows the actual value
  * @next: contains the pointer to the next node
  */
@@ -43,7 +44,7 @@ typedef struct var_l
 } var_t;
 
 /**
- * struct sep_1 - represents a separation list
+ * struct sep_l - represents a separation list
  * @sep: the variable for the separation list
  * @next: contains the pointer to the next node
  */
@@ -54,7 +55,9 @@ typedef struct sep_l
 } sep_t;
 
 /**
- * struct line_s -
+ * struct line_s - represents the line list
+ * @line: line variable
+ * @next: pointer to the next node
  */
 typedef struct line_s
 {
@@ -65,6 +68,7 @@ typedef struct line_s
 /**
  * struct builtins - represnt the builtin functions
  * @name: contains the name of the builtin function
+ * @f: functions that execute the builtin command
  */
 typedef struct builtins
 {
