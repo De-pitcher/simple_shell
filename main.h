@@ -23,7 +23,7 @@ extern char **environ;
 void open_console(void);
 void handle_sigint(int sig);
 void _prompt(int status);
-void error_h(char *s);
+void error_h(char *s, cmd_t *cmd);
 void init_var(cmd_t *cmd, char **argv);
 void shell_session(cmd_t *cmd);
 char *read_input(int status, int *num);

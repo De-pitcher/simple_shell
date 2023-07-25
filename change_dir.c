@@ -10,7 +10,7 @@
 int cd_home(cmd_t *cmd)
 {
 	char *p_cwd, *home;
-	char cwd[PATH_MAX];
+	char cwd[4096];
 
 	getcwd(cwd, sizeof(cwd));
 	p_cwd = _strdup(cwd);
@@ -27,7 +27,7 @@ int cd_home(cmd_t *cmd)
 	if (chdir(home) == -1)
 	{
 		free(p_cwd);
-		error_h("Cannot go home\n");
+		error_h("Cannot go home\n", cmd);
 		return (1);
 	}
 
@@ -49,7 +49,7 @@ int cd_home(cmd_t *cmd)
 
 int cd_back(cmd_t *cmd)
 {
-	char cwd[PATH_MAX];
+	char cwd[4096];
 	char *p_cwd, *p_oldcwd, *cp_cwd, *cp_oldcwd;
 
 	getcwd(cwd, sizeof(cwd));
@@ -91,7 +91,7 @@ int cd_back(cmd_t *cmd)
 
 int cd_curr(cmd_t *cmd)
 {
-	char cwd[PATH_MAX];
+	char cwd[4096];
 	char *cp_cwd;
 
 	getcwd(cwd, sizeof(cwd));
@@ -115,7 +115,7 @@ int cd_curr(cmd_t *cmd)
 
 int cd_parent(cmd_t *cmd)
 {
-	char cwd[PATH_MAX];
+	char cwd[4096];
 	char *cp_cwd, *cp_strtok_cwd;
 
 	getcwd(cwd, sizeof(cwd));
@@ -167,14 +167,14 @@ int cd_parent(cmd_t *cmd)
 
 int cd_path(char *dir, cmd_t *cmd)
 {
-	char cwd[PATH_MAX];
+	char cwd[4096];
 	char *cp_cwd, *cp_dir;
 
 	getcwd(cwd, sizeof(cwd));
 
 	if (chdir(dir) == -1)
 	{
-		error_h("Cannot change to the given directory\n");
+		error_h("Cannot change to the given directory\n", cmd);
 		return (1);
 	}
 	cp_cwd = _strdup(cwd);

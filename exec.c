@@ -133,7 +133,7 @@ int check_dir_access(char *dir, cmd_t *cmd)
 {
 	if (dir == NULL)
 	{
-		error_h("no such file or directory\n");
+		error_h("not found\n", cmd);
 		return (1);
 	}
 
@@ -141,7 +141,7 @@ int check_dir_access(char *dir, cmd_t *cmd)
 	{
 		if (access(dir, X_OK) == -1)
 		{
-			error_h("cannot access directory\n");
+			error_h("cannot access directory\n", cmd);
 			free(dir);
 			return (1);
 		}
@@ -151,7 +151,7 @@ int check_dir_access(char *dir, cmd_t *cmd)
 	{
 		if (access(cmd->args[0], X_OK) == -1)
 		{
-			error_h("cannot access command directory\n");
+			error_h("cannot access command directory\n", cmd);
 			return (1);
 		}
 	}

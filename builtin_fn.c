@@ -1,5 +1,7 @@
 #include "main.h"
 
+void builtin_err_h(cmd_t *cmd);
+
 /**
  * get_builtin - checks for builtins and returns the associated function
  *
@@ -84,12 +86,37 @@ int exit_sh(cmd_t *cmd)
 		big_number = ustatus > (unsigned int)INT_MAX;
 		if (!is_digit || str_len > 10 || big_number)
 		{
-			error_h("Invalid exit status");
 			cmd->status = 2;
+			builtin_err_h(cmd);
 		}
 		cmd->status = (ustatus % 256);
 		cmd->ready = 0;
 	}
 	cmd->ready = 0;
 	return (0);
+}
+
+/**
+ * builtin_err_h - handles the builtin error.
+ * @cmd: shell variable.
+ *
+ * Return: Nothing.
+ */
+
+void builtin_err_h(cmd_t *cmd)
+{
+	char *s = "Illegal number: ";
+	char *err_msg = malloc(sizeof(char *) + _strlen(s) +
+			_strlen(cmd->argv[0] + 2));
+
+	_strcpy(err_msg, cmd->argv[0]);
+	_strcat(err_msg, ": 1: ");
+	_strcat(err_msg, cmd->input);
+	_strcat(err_msg, ": ");
+	_strcat(err_msg, s);
+	_strcat(err_msg, cmd->args[1]);
+	_strcat(err_msg, "\n");
+	write(STDERR_FILENO, err_msg, strlen(err_msg));
+	free(err_msg);
+	exit(cmd->status);
 }

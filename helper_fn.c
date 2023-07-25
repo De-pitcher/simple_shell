@@ -51,10 +51,21 @@ void _prompt(int status)
  * error_h - a function that handles error
  *
  * @s: the error message
+ * @cmd: The shell cariable.
  * Return: Nothing.
  */
 
-void error_h(char *s)
+void error_h(char *s, cmd_t *cmd)
 {
-	write(STDERR_FILENO, s, _strlen(s));
+	char *err_msg = malloc(sizeof(char *) +
+			_strlen(s) + _strlen(cmd->argv[0] + 1));
+
+	_strcpy(err_msg, cmd->argv[0]);
+	_strcat(err_msg, ": 1: ");
+	_strcat(err_msg, cmd->input);
+	_strcat(err_msg, ": ");
+	_strcat(err_msg, s);
+	write(STDERR_FILENO, err_msg, _strlen(err_msg));
+	free(err_msg);
+	exit(cmd->status);
 }
