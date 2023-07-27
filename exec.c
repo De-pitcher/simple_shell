@@ -63,10 +63,14 @@ int _exec(cmd_t *cmd)
 	if (cmd->args[0] == NULL)
 		return (1);
 
+	/*if (!_strcmp(cmd->args[0], "alias"))
+			return (handle_alias(cmd));*/
+
 	builtin = get_builtin(cmd->args[0]);
 
 	if (builtin != NULL)
 		return (builtin(cmd));
+
 
 	return (execmd(cmd));
 }
@@ -83,7 +87,7 @@ int execmd(cmd_t *cmd)
 	pid_t wpd;
 	int state;
 	int exec;
-	char *dir;
+	char *dir, *al_cmd;
 	(void) wpd;
 
 	exec = is_executable(cmd);
@@ -91,6 +95,10 @@ int execmd(cmd_t *cmd)
 		return (1);
 	if (exec == 0)
 	{
+		if (!_strcmp(cmd->args[0], "alias"))
+			al_cmd = get_alias_value(handle_alias(cmd));
+		printf("al_cmd: %s, args: %s\n",al_cmd, cmd->args[0]);
+
 		dir = _which(cmd->args[0], cmd->envar);
 		if (check_dir_access(dir, cmd) == 1)
 			return (1);
@@ -133,6 +141,7 @@ int check_dir_access(char *dir, cmd_t *cmd)
 {
 	if (dir == NULL)
 	{
+		cmd->status = 127;
 		error_h("not found\n", cmd);
 		return (1);
 	}

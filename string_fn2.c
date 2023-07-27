@@ -11,14 +11,41 @@
 
 int _strcmp(char *str_a, char *str_b)
 {
-	int i = 0;
-
-	for (i = 0; str_a[i] != '\0' && str_b[i] != '\0'; i++)
+	while (*str_a && (*str_a == *str_b))
 	{
-		if (str_a[i] != str_b[i])
-			return (str_a[i] - str_b[i]);
+		str_a++;
+		str_b++;
 	}
-	return (0);
+
+	if (*str_a == *str_b && *str_a == '\0')
+	{
+		return (0);
+	}
+	else if (*str_a == '~' && (*str_b == '\0'))
+	{
+		return (0);
+	}
+	else if (*str_b == '~' && (*str_a == '\0'))
+	{
+		return (0);
+	}
+	else if (*str_a == '/' && (*str_b == '\0'))
+	{
+		return (0);
+	}
+	else if (*str_b == '/' && (*str_a == '\0'))
+	{
+		return (0);
+	}
+	else if (*str_a == '.' && *(str_a + 1) == '.' && (*str_b == '\0'))
+	{
+		return (0);
+	}
+	else if (*str_b == '.' && *(str_b + 1) == '.' && (*str_a == '\0'))
+	{
+		return (0);
+	}
+	return ((*str_a - *str_b));
 }
 
 /**

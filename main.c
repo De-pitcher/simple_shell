@@ -15,7 +15,7 @@ int main(int argc, char **argv)
 
 	signal(SIGINT, handle_sigint);
 	open_console();
-	init_var(&cmd, argv);
+	init_var(&cmd, argv, argc);
 	shell_session(&cmd);
 	free_envar(&cmd);
 

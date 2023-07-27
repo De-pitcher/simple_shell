@@ -11,8 +11,8 @@ int c_dir(cmd_t *cmd)
 {
 	char *args = cmd->args[1];
 
-	if (!args || !_strcmp(args, "~") || !_strcmp(args, "$HOME")
-	|| !_strcmp(args, "--"))
+	if (!args || !_strcmp(args, "~") || !_strcmp(args, "/")
+			|| !_strcmp(args, "$HOME") || !_strcmp(args, "--"))
 		return (cd_home(cmd));
 	else if (!_strcmp(args, "-"))
 		return (cd_back(cmd));

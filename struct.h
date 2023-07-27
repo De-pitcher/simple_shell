@@ -9,6 +9,7 @@
  * @ready: shows if the shell is ready
  * @status: represent the status of the command
  * @count: it counts the variable
+ * @arg_len: length of the argv variable.
  * @input: it is the actual command parsed by the user
  * @pid: represents the process that runs the command
  * @args: the agrument passed by the main function
@@ -21,6 +22,7 @@ typedef struct cmd_t
 	int ready;
 	int status;
 	int count;
+	int arg_len;
 	char *input;
 	char *pid;
 	char **args;
@@ -76,6 +78,18 @@ typedef struct builtins
 	int (*f)(cmd_t *cmd);
 } built_t;
 
+/**
+ * struct aliases - shortcut to regular commands to make life easier
+ * @name: alias name.
+ * @value: alias value.
+ */
+
+typedef struct aliases
+{
+	char *name;
+	char *value;
+} alias;
+
 /****** Linked list helpers ******/
 var_t *add_tail_node(var_t **head, int var_len, char *val, int val_len);
 sep_t *add_end_node(sep_t **head, char sep);
@@ -86,5 +100,10 @@ void free_var(var_t **head);
 void free_envar(cmd_t *cmd);
 void free_sep_list(sep_t **head);
 void free_line_list(line_t **head);
+
+/***** alias Functions *****/
+void add_alias(char *name, char *value, int is_init);
+char *get_alias_value(char *name);
+char *handle_alias(cmd_t *cmd);
 
 #endif
